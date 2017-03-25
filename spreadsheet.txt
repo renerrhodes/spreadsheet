@@ -1,0 +1,9 @@
+Java 1.7 or greater
+
+cyclical cell references not validated - leads to stackoverflow
+
+maximum values of numeric types not validated
+
+input and output files can be configured in properties or given as args on command line
+
+
