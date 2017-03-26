@@ -54,7 +54,6 @@ public class DataManager {
 	    
 		String[] cellAddress = RPNExpressions.splitCellAddressIntoAlphabeticAndNumeric(input);
 		
-		// TODO: throw exception in utiliy method
 		if (cellAddress == null || cellAddress[0] == null || cellAddress[1] == null){
 			throw new InvalidInputException("Invalid Excel-style cell address!");
 		}		
@@ -68,8 +67,8 @@ public class DataManager {
 	    try {
 	        
 	        record = DataManager.getInstance().getRecord(recordNumber);	        
-	     // Subtract 1 since records start with 0, not 1
 	        
+	        // Subtract 1 since records start with 0, not 1
 	        columnNumber = RPNParsingStrategy.getExcelColumnNumber(columnName) -1;
 	        
 	    } catch (IndexOutOfBoundsException ioobe){
@@ -78,8 +77,7 @@ public class DataManager {
 	    }
 	    
 	    
-	    String value = getRecordValueFromCSString(record, columnNumber);
-	    
+	    String value = getRecordValueFromCSString(record, columnNumber);	    
 	    return value;
 	}
 
@@ -93,7 +91,7 @@ public class DataManager {
             count++;
             pos = end + 1;
         }
-        // 
+         
         String lastEntry = record.substring(pos).trim();
         if (index!=count) throw new InvalidInputException("No entry in record matching index <" + index + ">");
         return lastEntry;
@@ -105,21 +103,19 @@ public class DataManager {
 
     public List<String> loadSpreadsheet(String inputFilePath) throws IOException {
         
-        List<String> inputRecords = new ArrayList<String>();
-        
+        List<String> inputRecords = new ArrayList<String>();        
         BufferedReader bufferedReader = null;
         
         try {
                 
-        bufferedReader = new BufferedReader(new FileReader(inputFilePath));
+            bufferedReader = new BufferedReader(new FileReader(inputFilePath));        
+            String record = null;
         
-        String record = null;
+            while ((record = bufferedReader.readLine()) != null) {
+                inputRecords.add(record);
+            }  
         
-        while ((record = bufferedReader.readLine()) != null) {
-            inputRecords.add(record);
-         }  
-        DataManager.records = (inputRecords);
-        
+        DataManager.records = (inputRecords);        
         validateRecords(records);
         
         return inputRecords;
@@ -134,26 +130,8 @@ public class DataManager {
     }
 
     private void validateRecords(List<String> records) {
-        // TODO: cyclical cell reference validation
-        /*Map<String> map = new HashMap<String>();
-        
-        Iterator iterator = records.iterator();
-        StringTokenizer tokenizer;
-        int column, row = 0;
-        while(iterator.hasNext()){
-            tokenizer = new StringTokenizer(",", (String)iterator.next());
-            row++;
-            while(tokenizer.hasMoreElements()){
-                String token = (String)tokenizer.nextToken();
-                if(token.matches(RPNExpressions.CELL_ADDRESS)){
-                    String addressee = token.mateches(RPNExpressions.CELL_ADDRESS.s)
-                    
-                }
-                column++;
-            }
-        }*/
-        
-        
+        // not implemented
+        LOGGER.warn("Cyclical Spreadsheet address references are not supported");
     }
 
     public void writeOutput(List<List<String>> outputRecords, String filepath) {
@@ -162,8 +140,7 @@ public class DataManager {
         try {
             
             //initialize FileWriter object in overwrite mode
-            fileWriter = new FileWriter(filepath, false);
-            
+            fileWriter = new FileWriter(filepath, false);            
             
             Iterator<List<String>> recordIterator = outputRecords.iterator();
             while(recordIterator.hasNext()) {
@@ -192,7 +169,5 @@ public class DataManager {
                 LOGGER.error("Error while closing fileWriter <" + ioe.getMessage() + ">");
             }
         }
-    }
-	
-	
+    }	
 }

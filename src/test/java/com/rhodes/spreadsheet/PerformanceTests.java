@@ -3,7 +3,6 @@ package com.rhodes.spreadsheet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,10 +16,6 @@ import com.rhodes.spreadsheet.rpn.RPNParsingStrategy;
 
 public class PerformanceTests extends AbstractBenchmark {
 	
-	//private static Object singleton = new Object();
-    //private static int COUNT = 50000;
-	//private static int [] rnd;
-	
 	private static RPNParsingStrategy strategy = new RPNParsingStrategy();	
 	private static List<String> inputData0 = null;	
 	private static List<String> inputData1 = null;
@@ -32,23 +27,14 @@ public class PerformanceTests extends AbstractBenchmark {
 	@BeforeClass
     public static void prepare() throws Exception
     {
-        /*rnd = new int [COUNT];
- 
-        final Random random = new Random();
-        for (int i = 0; i < COUNT; i++)
-        {
-            rnd[i] = Math.abs(random.nextInt());
-        }*/
-		
-		Configuration properties = new Configuration();
+        Configuration properties = new Configuration();
 		
 		properties.getPropValues();
 		
 		String inputFile = Configuration.getProperty(Properties.INPUT_FILE);
 		
-		// TODO: Define input data here (Mock or write out to disk?)
 		inputData0 = DataManager.getInstance().loadSpreadsheet(inputFile);
-		//List<List<String>> outputRecords = strategy.parseData(inputRecords);
+		
 		inputData1 = multiplyInputRecords(inputData0, 1);
 		inputData2 = multiplyInputRecords(inputData0, 10);
 		inputData3 = multiplyInputRecords(inputData0, 100);
@@ -65,14 +51,6 @@ public class PerformanceTests extends AbstractBenchmark {
 		return multipliedInput;
 	}
 	
-	/*@Before
-	public void setUp() throws Exception {
-	}*/
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Rule
 	public TestRule benchmarkRun = new BenchmarkRule();
 	

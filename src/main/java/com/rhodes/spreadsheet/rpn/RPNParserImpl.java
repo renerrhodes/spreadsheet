@@ -5,6 +5,7 @@ import static com.rhodes.spreadsheet.rpn.RPNExpressions.DECIMAL;
 import static com.rhodes.spreadsheet.rpn.RPNExpressions.ERROR;
 import static com.rhodes.spreadsheet.rpn.RPNExpressions.INTEGER;
 import static com.rhodes.spreadsheet.rpn.RPNExpressions.OPERATOR;
+import static com.rhodes.spreadsheet.rpn.RPNExpressions.OP;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -43,8 +44,8 @@ public class RPNParserImpl implements ParserIF {
                 doDecimal(sc.nextBigDecimal());
                 continue;
 
-                // CASE 2: cell address - resolve recursively to integer & add
-                // to stack!
+            // CASE 2: cell address - resolve recursively to integer & add
+            // to stack!
             } else if (sc.hasNext(CELL_ADDRESS)) {
                 String cellAddress = sc.next();
                 try {
@@ -56,11 +57,10 @@ public class RPNParserImpl implements ParserIF {
                     return ERROR;
                 }
 
-                // CASE 3: binary operator - evaluate and perform calculation
-                // with last two integer on stack!
+            // CASE 3: binary operator - evaluate and perform calculation
+            // with last two integer on stack!
 
-                // TODO: regex for operator doesn't work in hasNext
-            } else if (sc.hasNext("[\\+\\-−\\/\\*×xX\\%]")) {
+            } else if (sc.hasNext(OP)) {
                 try {
                     doCalcuation(sc.next());
                 } catch (RPNParsingException e) {

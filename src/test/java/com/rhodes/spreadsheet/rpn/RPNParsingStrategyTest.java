@@ -20,7 +20,6 @@ import com.rhodes.spreadsheet.data.InvalidInputException;
 @PrepareForTest({ RPNParserImpl.class })
 public class RPNParsingStrategyTest {
 
-    // TODO: this doesn't test the dm, it mocks him
     @Mock
     RPNParserImpl parser;
 
@@ -35,8 +34,6 @@ public class RPNParsingStrategyTest {
         List<String> inputRecord = new ArrayList<String>();
         inputRecord.add("1 1 +, 2 2 +, 3 3 +");
         List<List<String>> outputRecords = strategy.parseData(inputRecord);
-        assertEquals(outputRecords.get(0).get(0),"2");
-        
+        assertEquals(outputRecords.get(0).get(0),"2");        
     }
-
 }

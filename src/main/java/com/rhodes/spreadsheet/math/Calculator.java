@@ -63,17 +63,13 @@ public final class Calculator {
         else if (operator == '*' || operator == '×' || operator == 'x' || operator == 'X') return bigDec1.multiply(bigDec2);
         // Division - round towards positive infinity (ceiling) - consider making other options configurable.
         else if (operator == '/') return bigDec1.divide(bigDec2, BigDecimal.ROUND_CEILING);
-        // TODO: check formula for mod
-        else if (operator == '%') {
-        	BigDecimal bigDec3 = bigDec1.divide(bigDec2, BigDecimal.ROUND_DOWN).multiply(bigDec2); 
-        	return bigDec1.subtract(bigDec3);
-        }
+		else if (operator == '%')    return bigDec1.remainder(bigDec2);
+        
         else {
         	throw new CalculationException("Unrecognized operator string: <" + operator + ">");
         }
 	}
 	
-	// TODO: Make sure operands are in proper order
 	/**
 	 * @param first
 	 * @param second
@@ -81,8 +77,6 @@ public final class Calculator {
 	 * @return
 	 * @throws CalculationException
 	 */
-	// TODO: Optimize - use int /BigInteger as required instead of alwwas BigInteger?
-	// TODO: remove trailing zeroes
 	private Number performIntegerCalculation(String first, String second, char operator) throws CalculationException {
 	    try {
 		if      (operator == '+') return BigInteger.valueOf(Long.parseLong(first)).add(BigInteger.valueOf(Long.parseLong(second)));
