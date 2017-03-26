@@ -6,7 +6,7 @@ REQUIREMENTS:
     2) MAVEN - in order to build the project an Apache Mavendinstallation (M2 or higher) is required
               
 BUILDING THE PROJECT:
-    Run 'mvn clean install -DskipTests' from the command line.
+    Run 'mvn clean install' (optionally with '-DskipTests', if you would like the build to go faster) from the command line.
     
 RUNNING THE PROGRAM:
     Simply run the run.sh or run.bat script from the command line. The input file located in the data/input directory will be processed. 
