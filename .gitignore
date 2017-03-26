@@ -1,0 +1,52 @@
+# Eclipse Ignores #
+################
+*.settings
+*.project
+
+# Generic Android ignores #
+###########################
+bin/
+target
+classes/
+
+# Compiled source #
+###################
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+*.7z
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+log/
+*.log
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# VCS #
+#######
+.svn
+.svn/
+CVS
+
+# Misc #
+########
+..gitignore.un~
+.gitignore~
+
