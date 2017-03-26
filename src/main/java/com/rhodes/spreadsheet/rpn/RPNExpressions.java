@@ -12,7 +12,7 @@ public class RPNExpressions {
 	
 	public static final String OPERATOR = "^[\\s]*[\\+\\-−\\/\\*×xX\\%]+[\\s]*$";
 	
-	// necessary to recognize operator symbols for hasNext in Scanner
+	// 2nd operator regex necessary to recognize operator symbols for hasNext() in Scanner
 	public static final String OP = "[\\+\\-−\\/\\*×xX\\%]";
 		
 	public static boolean isCellAddress(String input){
@@ -22,6 +22,13 @@ public class RPNExpressions {
 		return false;		
 	}
 	
+	/**
+	 * Simple utility method to split Excel-style spreadsheet cell address ('A1')
+	 * into alphabetic and numeric components
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public static String[] splitCellAddressIntoAlphabeticAndNumeric(String input){
 		String alphabetic = input.split("\\d")[0];
 		String numeric = input.split("\\D")[1];

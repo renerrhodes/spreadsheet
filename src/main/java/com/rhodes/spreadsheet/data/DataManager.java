@@ -58,10 +58,8 @@ public class DataManager {
 			throw new InvalidInputException("Invalid Excel-style cell address!");
 		}		
 		
-		int recordNumber = Integer.valueOf(cellAddress[1]) -1;
-	    
-	    String columnName = cellAddress[0];
-	    
+		int recordNumber = Integer.valueOf(cellAddress[1]) -1;	    
+	    String columnName = cellAddress[0];	    
 	    int columnNumber;
 	    
 	    try {
@@ -74,13 +72,21 @@ public class DataManager {
 	    } catch (IndexOutOfBoundsException ioobe){
 	        LOGGER.error("Error referencing cell address <" + input + ">");
 	        throw new InvalidInputException("Invalid Cell Reference in input data <" + input + ">");
-	    }
-	    
+	    }	    
 	    
 	    String value = getRecordValueFromCSString(record, columnNumber);	    
 	    return value;
 	}
 
+    /**
+     * Utility method to extract an entry from a comma-separated string (record), 
+     * starting with index 0.
+     * 
+     * @param record
+     * @param index
+     * @return
+     * @throws InvalidInputException
+     */
     private String getRecordValueFromCSString(String record, int index) throws InvalidInputException {
         int pos = 0, end;
         int count = 0;
