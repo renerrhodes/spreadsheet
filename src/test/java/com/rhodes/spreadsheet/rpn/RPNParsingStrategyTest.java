@@ -1,10 +1,12 @@
 package com.rhodes.spreadsheet.rpn;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.powermock.api.mockito.PowerMockito.when;
 
-import org.junit.After;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,29 +20,23 @@ import com.rhodes.spreadsheet.data.InvalidInputException;
 @PrepareForTest({ RPNParserImpl.class })
 public class RPNParsingStrategyTest {
 
-        // TODO: this doesn't test the dm, it mocks him
-        @Mock
-        RPNParserImpl parser;
+    // TODO: this doesn't test the dm, it mocks him
+    @Mock
+    RPNParserImpl parser;
 
-        @Before
-        public void setup() throws InvalidInputException {
-            // preparing the data by making the mock
-            //mockStatic(RPNParserImpl.class);
-            //when(DataManager.getInstance()).thenReturn(dm);
-            when(parser.parse(anyString())).thenReturn("3");
-        }
+    @Before
+    public void setup() throws InvalidInputException {
+        when(parser.parse(anyString())).thenReturn("3");
+    }
 
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+    @Test
+    public void testParseData(){
+        RPNParsingStrategy strategy = new RPNParsingStrategy();
+        List<String> inputRecord = new ArrayList<String>();
+        inputRecord.add("1 1 +, 2 2 +, 3 3 +");
+        List<List<String>> outputRecords = strategy.parseData(inputRecord);
+        assertEquals(outputRecords.get(0).get(0),"2");
+        
+    }
 
 }
