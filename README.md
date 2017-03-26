@@ -27,6 +27,12 @@ OUTPUT:
     which exceed the limitations of the Java BigInteger and/or BigDecimal classes, or the resources of the computer running
     the program. 
     
+EXPRESSION PARSING FOR CALCULATIONS:
+    In Postfix notation, expressions with binary operators are represented, with the operator appearing after the
+    operands, e.g. '1 1 +' instead of '1 + 1'. The program assumes that a minus sign appearing immediately before an operand
+    means that the operand is negative, e.g. '1 1 - 3 +' evaluates to '3', whereas '1 1 -3 +' would be invalid, since the - before
+    the 3 would not be understood as an operator, rather as the literal value '-3'.
+    
 LOGGING:
     Currently only console logging is enabled. The logging level can me altered in the config/log4j.xml file (set to INFO by default),
     in order to change the verbosity/granularity of the logging messages (ERROR for less, DEBUG for more).

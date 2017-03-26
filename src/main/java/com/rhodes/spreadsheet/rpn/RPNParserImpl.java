@@ -27,85 +27,7 @@ public class RPNParserImpl implements ParserIF {
     Calculator calculator = Calculator.getInstance();
     Stack<Number> stack = new Stack<Number>();
 	
-	// TODO: break up into smaller 'do' methods
-
-	/*public String parse(String input) throws ParsingException {
-		sc = new Scanner(input.trim());
-		
-		while (sc.hasNext()) {
-
-			// CASE 1:integer - add it to the stack!
-			if (sc.hasNextInt()) {
-				int next = sc.nextInt();
-				stack.push(next);
-				continue;
-			} else if (sc.hasNext(DECIMAL)) {
-				BigDecimal bigDec = sc.nextBigDecimal();
-				stack.push(bigDec);
-
-				// CASE 2: cell address - resolve recursively to integer & add
-				// to stack!
-			} else if (sc.hasNext(CELL_ADDRESS)) {
-				String cellAddress = sc.next();
-				String data;
-                try {
-                    data = DataManager.getInstance().getSpreadsheetCellData(cellAddress).trim();
-                } catch (InvalidInputException e) {
-                    LOGGER.error("Invalid Cell Address Reference <" + cellAddress + ">");
-                    return ERROR;
-                }
-				String result = new RPNParserImpl().parse(data);
-				// If result is valid (an integer), add to stack, otherwise
-				// write #ERR
-				if (result.matches(INTEGER)) {
-					stack.push(Integer.valueOf(result));
-					continue;
-
-					// Invalid cell referenced --> entire expression is invalid
-				} else if (result.matches(DECIMAL)) {
-				    stack.push(new BigDecimal(result));
-				
-			    } else if (result.equals(ERROR)) {
-					return ERROR;
-				}
-
-				// CASE 3: binary operator - evaluate and perform calculation
-				// with last two integer on stack!
-
-				// TODO: regex for operator doesn't work in hasNext
-				 } else if (sc.hasNext("[\\+\\-−\\/\\*×xX\\%]")) {
-			
-				String next = sc.next();
-				
-				if (next == null || !next.matches(OPERATOR)) {
-					LOGGER.error("Error parsing expression: <" + next + "> should be an operator. Expression: <" + input
-							+ ">");
-					return ERROR;
-				}
-				char operator = next.charAt(0);
-				String last = null, secondToLast = null;
-				try {
-					last = stack.pop().toString();
-					secondToLast = stack.pop().toString();
-					stack.push(calculator.performCalculation(secondToLast, last, operator));
-				} catch (EmptyStackException ese) {
-					LOGGER.error("Less than two numbers remaining in stack. Binary operation not possible.");
-					return ERROR;
-				} catch (CalculationException e) {
-					LOGGER.error("Calculation error! Input: <" + input + "> stack: <" + stack.toString() + ">");
-					return ERROR;
-				} 
-			} else {
-				// TODO: Throw Parsing Exception?
-			    LOGGER.info("Skipping token <" + sc.next() + ">");
-			}
-		}
-
-		// DONE: Return remaining value (solution) or #ERR, if stack is empty
-		return (stack.size() == 1) ? stack.pop().toString() : ERROR;
-	}*/
-	
-    public String parse(String input) {
+	public String parse(String input) {
         sc = new Scanner(input.trim());
 
         while (sc.hasNext()) {
@@ -161,7 +83,6 @@ public class RPNParserImpl implements ParserIF {
             LOGGER.error("Error parsing expression: <" + operator
                     + "> should be an operator. Expression: <" + operator
                     + ">");
-            // return ERROR;
             LOGGER.error("Parsing error expected operator but got <" + operator
                     + ">");
             throw new RPNParsingException();
@@ -191,12 +112,12 @@ public class RPNParserImpl implements ParserIF {
                     .trim();
 
             String result = new RPNParserImpl().parse(data);
-            // If result is valid (an integer), add to stack, otherwise
+            // If result is valid (an integer/decimal), add to stack, otherwise
             // write #ERR
             if (result.matches(INTEGER)) {
                 stack.push(Integer.valueOf(result));
 
-                // Invalid cell referenced --> entire expression is invalid
+            // Invalid cell referenced --> entire expression is invalid
             } else if (result.matches(DECIMAL)) {
                 stack.push(new BigDecimal(result));
             } else if (result.equals(ERROR)) {
@@ -206,14 +127,8 @@ public class RPNParserImpl implements ParserIF {
         } catch (InvalidInputException e) {
             LOGGER.error(
                     "Invalid Cell Address Reference <" + cellAddress + ">");
-            // return ERROR;
             throw new RPNParsingException();
-        } /*catch (ParsingException e) {
-            LOGGER.error(
-                    "Invalid Cell Address Reference <" + cellAddress + ">");
-            // return ERROR;
-            throw new RPNParsingException();
-        }*/
+        }
     }
     
     private void doBigInteger(BigInteger bigInteger) {
