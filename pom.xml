@@ -19,14 +19,6 @@
 	</properties>
 
 	<build>
-		<resources>
-			<resource>
-				<directory></directory>
-				<!-->excludes> <exclude>[non-resource file #1]</exclude> <exclude>[non-resource 
-					file #2]</exclude> <exclude>[non-resource file #3]</exclude> ... <exclude>[non-resource 
-					file #n]</exclude> </excludes -->
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -59,6 +51,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -72,19 +65,8 @@
 					</archive>
 				</configuration>
 			</plugin>
-			<!-- plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
-				<version>3.0.2</version> <configuration> <archive> <index>true</index> <manifest> 
-				<addClasspath>true</addClasspath> <mainClass>com.rhodes.spreadsheet.Launcher</mainClass> 
-				</manifest> <manifestEntries> <mode>development</mode> <url>${project.url}</url> 
-				<key>value</key> </manifestEntries> </archive> </configuration> </plugin -->
 		</plugins>
-
-
-
-
-
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
