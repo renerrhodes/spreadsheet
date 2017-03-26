@@ -28,9 +28,17 @@ public class RPNParserImpl implements ParserIF {
     Calculator calculator = Calculator.getInstance();
     Stack<Number> stack = new Stack<Number>();
 	
-	public String parse(String input) {
+	/** Parses an RPN expression (or an entry containing at spreadsheet cell 
+    * address that contains an RPN expression/cell address, and return a 
+    * numberical result value or '#ERR', if the expression is invalid or
+    * an error occurs during parsing
+    * 
+    * @see com.rhodes.spreadsheet.parsing.ParserIF#parse(java.lang.String)
+    */
+    public String parse(String input) {
         sc = new Scanner(input.trim());
 
+        // Process each token from scanner
         while (sc.hasNext()) {
 
             // CASE 1:integer - add it to the stack!
@@ -76,8 +84,18 @@ public class RPNParserImpl implements ParserIF {
 
         // DONE: Return remaining value (solution) or #ERR, if stack is empty
         return (stack.size() == 1) ? stack.pop().toString() : ERROR;
-    }
-
+    }    
+    
+    /**
+     * Performs a binary calculation with the current (operator) token, using
+     * the last two numerical elements on the stack as operands, or throws an
+     * exception, if one or more of the required elements is missing, or the
+     * calculation is not possible (e.g. because of an undefined operation, 
+     * like division by zero, etc.
+     * 
+     * @param operator
+     * @throws RPNParsingException
+     */
     private void doCalcuation(String operator) throws RPNParsingException {
         if (operator == null || !operator.matches(OPERATOR)) {
             LOGGER.error("Error parsing expression: <" + operator
@@ -105,6 +123,14 @@ public class RPNParserImpl implements ParserIF {
         }
     }
 
+    /**
+     * Recursively parses the expression in the referenced spreadsheet cell 
+     * address, or returns '#ERR' or an exception if the referenced expression
+     * is invalid.
+     * 
+     * @param cellAddress
+     * @throws RPNParsingException
+     */
     private void doCellAddress(String cellAddress) throws RPNParsingException {
         String data;
         try {
@@ -131,14 +157,17 @@ public class RPNParserImpl implements ParserIF {
         }
     }
     
+    // Add numerical value to the stack for subsequent calculation
     private void doBigInteger(BigInteger bigInteger) {
         stack.push(bigInteger);
     }
 
+    // Add numerical value to the stack for subsequent calculation
     private void doDecimal(BigDecimal bigDecimal) {
         stack.push(bigDecimal);
     }
 
+    // Add numerical value to the stack for subsequent calculation
     private void doInteger(int integer) {
         stack.push(integer);
     }

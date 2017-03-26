@@ -8,8 +8,16 @@ import com.rhodes.spreadsheet.parsing.ParsingStrategyIF;
 
 public class RPNParsingStrategy implements ParsingStrategyIF {
 
-    private RPNParserImpl parser = new RPNParserImpl();
+    // Reverse Polish nation parser 
+    private RPNParserImpl parser = new RPNParserImpl();        
 
+    /**
+     * Iterates over each entry in each record of the input file and delegates the
+     * expression to a Postfix parser and stores the result in a list for a
+     * similarly structured output file.
+     * 
+     * @see com.rhodes.spreadsheet.parsing.ParsingStrategyIF#parseData(java.util.List)
+     */
     public List<List<String>> parseData(List<String> inputRecords)
             /*throws ParsingException*/ {
         List<List<String>> outputRecords = new ArrayList<List<String>>();
@@ -43,6 +51,9 @@ public class RPNParsingStrategy implements ParsingStrategyIF {
         return outputRecords;
     }
 
+    // returns an integer corresponding to the alphabetical
+    // Excel-style column number of the input, e.g. 1 for 'a',
+    // 2 for 'b', etc.
     public static int getExcelColumnNumber(String column) {
 
         int number = 0;
