@@ -7,20 +7,23 @@ import java.io.InputStream;
 import org.apache.log4j.Logger;
 
 /**
- * @author      Rene Rhodes <address @ rene.rhodes@gmail.com/>
- * @version     1.0                 
-  */
+* Utility class for loading property configuration files.
+*
+* @author  R. Rhodes
+* @version 1.0
+* @since   2017-03-25
+*/
 public class Configuration {
 
     private static final Logger LOGGER = Logger.getLogger(Configuration.class);
 
     /**
-     * Input stream for loading properties file
+     * Input stream for loading properties file.
      */
     private InputStream inputStream;
 
     /**
-     * Application properties
+     * Properties for application access.
      */
     private static java.util.Properties prop = new java.util.Properties();
 
@@ -42,13 +45,12 @@ public class Configuration {
             if (inputStream != null) {
                 prop.load(inputStream);
             } else {
-                throw new FileNotFoundException("property file '" + propFileName
-                        + " not found in the classpath");
+                throw new FileNotFoundException("Property file '" + propFileName
+                        + " not found in the classpath.");
             }
 
             // Print out the loaded property file name for the input data
-            LOGGER.info("Application properties loaded. Input file ="
-                    + prop.getProperty("app.data.inputfile"));
+            LOGGER.info("Application properties loaded.");
 
         } finally {
             inputStream.close();
@@ -56,12 +58,11 @@ public class Configuration {
     }
 
     /**
-     * Returns the value of the desired property based on the property name
-     * entered in the configuration file.
+     * Returns the property, based on the name in the config.properties file.
      *
      * @param property
-     *            name of the property requested
-     * @return value of the property
+     *            property name
+     * @return property value
      */
     public static String getProperty(final String property) {
         return prop.getProperty(property);

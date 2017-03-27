@@ -8,9 +8,12 @@ import com.rhodes.spreadsheet.parsing.ParsingStrategyIF;
 import com.rhodes.spreadsheet.rpn.RPNParsingStrategy;
 
 /**
- * @author Rene Rhodes <address @ rene.rhodes@gmail.com/>
- * @version 1.0
- */
+* Launcher class for starting the spreadsheet program.
+*
+* @author  R. Rhodes
+* @version 1.0
+* @since   2017-03-25
+*/
 public class Launcher {
 
     private static final Logger LOGGER = Logger.getLogger(Launcher.class);
@@ -36,16 +39,22 @@ public class Launcher {
             properties.getPropValues();
              
             // Set input file path with 1st command line argument or value from config.properties 
-            String inputFilePath = argv.length > 0 ? argv[0] : Configuration.getProperty(Properties.INPUT_FILE);
+            String inputFilePath = argv.length > 0 ? argv[0] : Configuration.getProperty(Properties.INPUT_FILE);            
+            
+            LOGGER.info("Input file path is: <" + inputFilePath + ">");
             
             // Set output file path with 2nd command line argument or value from config.properties 
             String outputFilePath = argv.length > 1 ? argv[1] : Configuration.getProperty(Properties.OUTPUT_FILE);
-
             
+            LOGGER.info("Output file path is: <" + outputFilePath + ">");
+            
+            // Instantiate parsing strategy for postfix parsing
             ParsingStrategyIF strategy = new RPNParsingStrategy();
             
+            // Instantiate spreadsheet processor with input- and output paths and concrete strategy implementation
             SpreadsheetProcessor processor = new SpreadsheetProcessor(inputFilePath, outputFilePath, strategy);
             
+            // Process data
             processor.processSpreadsheet();
             
             long time2 = System.currentTimeMillis();
