@@ -1,13 +1,27 @@
-echo Launching spreadsheet program.
+@REM Sets optional input and output file paths with first and second positional
+@REM arguments, if one or both are present, otherwise the settings in the
+@REM config/config.properties file are used.
 
-echo %DATE%
-echo %TIME%
-set datetimef=%date:~-4%_%date:~3,2%_%date:~0,2%__%time:~0,2%_%time:~3,2%_%time:~6,2%
-echo %datetimef%
+@echo off
+set infile=%1
 
-echo off
+set outfile=%2
 
-set arg1=%1
-set arg2=%2
+set argC=0
+for %%x in (%*) do Set /A argC+=1
 
-java -cp .\\target\\spreadsheet-1.0-SNAPSHOT.jar com.rhodes.spreadsheet.Launcher %arg1% %arg2%
+if %argC% NEQ 0 (
+    @echo %argC% positional argument^(s^) found.
+) else (
+    @echo No input arguments found. The input and output file paths will be set from config/config.properties.
+) 
+
+if [%1] NEQ [] (
+    @echo Input file from command line %infile%
+)
+
+if [%2] NEQ [] (
+    @echo Output file from command line %outfile%
+)
+
+java -cp .\\target\\spreadsheet-1.0-SNAPSHOT.jar com.rhodes.spreadsheet.Launcher %infile% %outfile%
